@@ -32,3 +32,8 @@ yarn lint
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+### Example para count array and filter
+```
+https://imasters.com.br/desenvolvimento/ecmascript-6-conheca-os-novos-loops
+```
