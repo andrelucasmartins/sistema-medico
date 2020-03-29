@@ -5,13 +5,28 @@
         <div class="col-md-12">
           <h1 class="text-center mt-5">Sistema Médico</h1>
           <h2>Sintomas</h2>
-          <div class="form-check form-check-inline" v-for="(name, index) in all_sintomas" :key="index">
-            <input class="form-check-input" type="checkbox" :id="index" :value="index">
-            <label class="form-check-label" :for="index">{{ name }}</label>
-          </div>
+          <hr>
+        </div>
+      </div>
+      <div class="row row-cols-3">
+        <div class="form-check form-check-inline col" v-for="(sintoma, key, index) in all_sintomas" :key="index">
+          <input class="form-check-input" type="checkbox" :id="index" :value="key" v-model.number="result">
+          <label class="form-check-label" :for="index">{{ sintoma }}</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
           <hr>
           <h2>Resultado</h2>
-          <div>{{  }}</div>
+          <div class="text-danger">{{ this.countResult }}</div>
+          <div class="card mt-3" style="width: 18rem;" v-for="(doenca, key , index) in doencas" :key="index" v-show="doenca.name == countResult">
+            <div class="card-header">
+              {{ doenca.name }}
+            </div>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item" v-for="sintoma in doenca.sintomas" :key="sintoma.id">{{ sintoma }}</li>
+            </ul>
+        </div>
         </div>
       </div>
     </div>
@@ -20,40 +35,35 @@
 <script>
 export default {
   name: 'app',
-  result: '',
-  count: 0,
-  methods: {
-    countSintomas (count) {
-      switch (count) {
-        case count === 100:
-          this.result = 'Gripe'
-          break
-        case count === 110:
-          this.result = 'Gripe'
-          break
-        case count === 111:
-          this.result = 'Gripe'
-          break
-        default:
-          this.result = 'Insira mais dados'
-          break
+  computed: {
+    countResult () {
+      const r = this.result.reduce((acc, num) => acc + num, 0)
+      let result
+      if (r === 28) {
+        result = this.doencas[0].name
+      } else if (r === 46) {
+        result = this.doencas[1].name
+      } else if (r === 48) {
+        result = this.doencas[2].name
       }
+      return result
     }
   },
   data () {
     return {
+      result: [],
       all_sintomas: {
         1: 'Febre alta',
         2: 'Dor de cabeça',
-        3: 'Dor_nos musculos',
-        4: 'Dor_de_articulacoes',
-        5: 'calafrios',
-        6: 'tosse',
+        3: 'Dor nos músculos',
+        4: 'Dor de articulações',
+        5: 'Calafrios',
+        6: 'Tosse',
         7: 'Secreção nasal',
-        8: 'Falta ar',
         9: 'Coceira pele',
-        10: 'Conjuntivite',
-        11: 'Automento gânglios'
+        13: 'Conjuntivite',
+        25: 'Falta de ar',
+        26: 'Automento gânglios'
       },
       doencas: [
         {
@@ -61,7 +71,7 @@ export default {
           sintomas: {
             1: 'Febre alta',
             2: 'Dor de cabeça',
-            3: 'Dor_nos musculos',
+            3: 'Dor nos músculos',
             5: 'calafrios',
             6: 'tosse',
             7: 'Secreção nasal'
@@ -72,11 +82,11 @@ export default {
           sintomas: {
             1: 'Febre alta',
             2: 'Dor de cabeça',
-            3: 'Dor_nos musculos',
-            4: 'Dor_de_articulacoes',
+            3: 'Dor nos músculos',
+            4: 'Dor de articulações',
             5: 'calafrios',
             6: 'tosse',
-            8: 'Falta ar'
+            25: 'Falta de ar'
           }
         },
         {
@@ -84,11 +94,11 @@ export default {
           sintomas: {
             1: 'Febre alta',
             2: 'Dor de cabeça',
-            3: 'Dor_nos musculos',
-            4: 'Dor_de_articulacoes',
+            3: 'Dor nos músculos',
+            4: 'Dor de articulações',
             9: 'Coceira pele',
-            10: 'Conjuntivite',
-            11: 'Automento gânglios'
+            13: 'Conjuntivite',
+            26: 'Automento gânglios'
           }
         }
       ]
